@@ -2,7 +2,7 @@ package LIMS::Controller;
 
 use 5.006;
 
-our $VERSION = '1.3';
+our $VERSION = '1.31';
 
 { package lims_controller;
 
