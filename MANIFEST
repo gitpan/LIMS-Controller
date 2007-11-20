@@ -1,0 +1,12 @@
+Changes
+Makefile.PL
+MANIFEST
+README
+t/LIMS-Controller.t
+t/LIMS-MT_Plate.t
+lib/LIMS/Base.pm
+lib/LIMS/Controller.pm
+lib/LIMS/MT_Plate.pm
+lib/LIMS/MT_Plate_File.pm
+lib/LIMS/Database/Util.pm
+lib/LIMS/Web/Interface.pm
