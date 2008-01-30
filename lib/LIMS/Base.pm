@@ -2,7 +2,7 @@ package LIMS::Base;
 
 use 5.006;
 
-our $VERSION = '1.2';
+our $VERSION = '1.3';
 
 { package lims;
 

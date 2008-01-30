@@ -2,7 +2,7 @@ package LIMS::Database::Util;
 
 use 5.006;
 
-our $VERSION = '1.37';
+our $VERSION = '1.39';
 
 { package lims_database;
 
@@ -599,12 +599,24 @@ our $VERSION = '1.37';
   		}
 		$self->rows_affected($inserts);  		
   		$sth->finish();
-  		$self->commit_session;
+  		$self->commit_session unless ($self->dont_commit);
   		if (($insert_id)&&(wantarray( ))){
   			return @aInsert_IDs;
   		} else {
   			return $inserts;	# number of rows inserted
   		}
+  	}
+  	sub force_no_commit {
+  		my $self = shift;
+  		$self->{ _no_commit }++;
+  	}
+  	sub dont_commit {
+  		my $self = shift;
+  		$self->{ _no_commit };
+  	}
+  	sub reset_commit {
+  		my $self = shift;
+  		delete $self->{ _no_commit };
   	}
   	sub set_dbh_errors {
   		my $self = shift;

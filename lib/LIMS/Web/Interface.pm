@@ -2,7 +2,7 @@ package LIMS::Web::Interface;
 
 use 5.006;
 
-our $VERSION = '1.2';
+our $VERSION = '1.4';
 
 { package lims_interface;
 
@@ -39,6 +39,12 @@ our $VERSION = '1.2';
 		my $self = shift;
 		$self->{ _page_title };
 	}
+	sub css {
+		return;
+	}
+	sub verbatim {
+		return;
+	}
 	sub print_header {
 		my $self = shift;
 		$self->print_cgi_header;
@@ -46,12 +52,17 @@ our $VERSION = '1.2';
 	}
 	sub print_title {
 		my $self = shift;
-		my $title = $self->page_title;
+		return if ($self->title_printed);
 		my $q = $self->get_cgi;
-		print $q->h1($title);	
+		print $q->h1($self->page_title);	
+		$self->{ _title } = 1;	
 	}
 	sub print_footer {
-		return;
+		my $self = shift;
+		return if ($self->footer_printed);
+		$self->print_header unless ($self->header_printed);
+		print $self->footer;
+		$self->{ _footer } = 1;
 	}
 	sub print_cgi_header {
 		my $self = shift;

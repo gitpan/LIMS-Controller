@@ -5,7 +5,7 @@ use strict;
 use warnings;
 use Exporter;
 our @ISA = qw( Exporter );
-our $VERSION = '0.112';
+our $VERSION = '1.14';
 
 
 { package plate;
@@ -213,6 +213,7 @@ our $VERSION = '0.112';
 	# using the MT_Plate_File object
 	# and a spreadsheet format describing well contents
 	sub mt_plate_file {
+		require LIMS::MT_Plate_File;
 		my $self = shift;
 		if(@_) {
 			my $file_type = shift;

@@ -1,5 +1,5 @@
-LIMS::Controller version 1.31
-=============================
+LIMS::Controller version 1.4
+============================
 
 LIMS::Controller is a suite of object-oriented Perl modules designed to be the object layer between a LIMS database and its web interface. The module provides automation for many core and advanced functions required of a web/database object layer, enabling rapid development of Perl CGI scripts. 
 
@@ -31,8 +31,6 @@ This module requires these other modules and libraries:
   Date::EzDate
 
 COPYRIGHT AND LICENCE
-
-Put the correct copyright and licence information here.
 
 Copyright (C) 2007 by Christopher Jones, University College London
 

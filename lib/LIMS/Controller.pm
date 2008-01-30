@@ -2,7 +2,7 @@ package LIMS::Controller;
 
 use 5.006;
 
-our $VERSION = '1.31';
+our $VERSION = '1.5';
 
 { package lims_controller;
 
@@ -180,6 +180,8 @@ our $VERSION = '1.31';
 			AND password = OLD_PASSWORD(?)
 		";
 		if (my $personnel_id = $self->sql_fetch_bindparam($statement,$user_pass)){
+			my $q = $self->get_cgi;
+			$q->delete('password','Login');
 			$self->personnel_id($personnel_id);
 			$self->update_session;
 		} else {
