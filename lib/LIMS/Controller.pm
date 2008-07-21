@@ -2,7 +2,7 @@ package LIMS::Controller;
 
 use 5.006;
 
-our $VERSION = '1.5';
+our $VERSION = '1.6';
 
 { package lims_controller;
 
@@ -293,26 +293,6 @@ our $VERSION = '1.5';
 		}
 		my $file_id = $self->filehandle_to_blob($filehandle,$file_name);
 		return ($file_id, $file_name);
-	}
-	sub filehandle_to_blob {
-		my $self = shift;
-		my $filehandle = shift;
-		my $file_name = shift;
-		my $dbh = $self->get_dbh;
-		binmode($filehandle);
-		my $file_str;
-		{
-			local( $/, undef ) ;
-			$file_str = <$filehandle>;
-		}
-		my $file_id = $self->insert_and_execute_placeholders('files',[$file_str,$file_name]);
-		if ($self->any_error) {
-			$self->rollback_session;
-			$self->kill_pipeline;
-		} else {
-			$self->commit_session;
-			return $file_id;
-		}   
 	}
 
 }

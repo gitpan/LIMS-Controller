@@ -5,7 +5,7 @@ use strict;
 use warnings;
 use Exporter;
 our @ISA = qw( Exporter );
-our $VERSION = '1.14';
+our $VERSION = '1.15';
 
 
 { package plate;
@@ -284,10 +284,10 @@ our $VERSION = '1.14';
 		my $well = shift;
 		
 		my ($row,$col) = (uc $well, uc $well);
-		$row =~ s/\d//g;
-		$col =~ s/\D//g;
-
-		return ($row,$col);
+		$row =~ s/\d//g; # remove numbers
+		$col =~ s/\D//g; # remove letters
+		$col =~ s/^0//; # remove leading zero
+		return ($row,$col);	
 	}
 	
 	# method that returns an array_ref containing the well names

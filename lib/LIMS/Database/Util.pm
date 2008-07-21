@@ -2,7 +2,7 @@ package LIMS::Database::Util;
 
 use 5.006;
 
-our $VERSION = '1.39';
+our $VERSION = '1.41';
 
 { package lims_database;
 
@@ -517,12 +517,13 @@ our $VERSION = '1.39';
 		my $self = shift;
 		my $table = shift;
 		
-		if (my $aFields = $self->return_fields_array($table)){
-			my $cs_fields = "";
-			for my $field (@$aFields){		
-				$cs_fields = $cs_fields.$field.",";
-			}
-			$cs_fields =~ s/,$//;
+		if (my $aFields = $self->return_fields_array($table)){	
+#			my $cs_fields = "";
+#			for my $field (@$aFields){		
+#				$cs_fields = $cs_fields.$field.",";
+#			}
+#			$cs_fields =~ s/,$//;
+			my $cs_fields = join(",",@$aFields);
 			return $cs_fields;
 		} else {
 			return;
@@ -810,6 +811,26 @@ our $VERSION = '1.39';
 		my $dbh = $self->get_dbh;
 		$dbh->{LongReadLen} = $self->max_blob_length;	# will throw error if truncated
 		return $self->sql_fetch_singlefield($statement);
+	}
+	sub filehandle_to_blob {
+		my $self = shift;
+		my $filehandle = shift;
+		my $file_name = shift;
+		my $dbh = $self->get_dbh;
+		binmode($filehandle);
+		my $file_str;
+		{
+			local( $/, undef ) ;
+			$file_str = <$filehandle>;
+		}
+		my $file_id = $self->insert_and_execute_placeholders('files',[$file_str,$file_name]);
+		if ($self->any_error) {
+			$self->rollback_session;
+			$self->kill_pipeline;
+		} else {
+			$self->commit_session;
+			return $file_id;
+		}   
 	}
 	# a db specific blob length should be set. this defaults
 	sub max_blob_length {

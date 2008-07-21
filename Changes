@@ -7,3 +7,5 @@ Revision history for Perl extension LIMS::Controller.
 	- changed prerequisite for Microarray to v0.3 in Makefile.PL
 1.4   Mon Jan 21 12:00:00 2008
 	- LIMS::Database::Util - changed method insert_with_placeholder(), now makes call to check if dont_commit is true before issuing commit
+1.5   Mon July 21 11:07:00 2008
+	- Minor changes
