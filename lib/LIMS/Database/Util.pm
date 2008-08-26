@@ -2,7 +2,7 @@ package LIMS::Database::Util;
 
 use 5.006;
 
-our $VERSION = '1.41';
+our $VERSION = '1.42';
 
 { package lims_database;
 
@@ -716,22 +716,23 @@ our $VERSION = '1.41';
 				$insert_id = $sth->{'mysql_insertid'};				
 			};
 		} else {		
-			eval {
+			eval { 
 				$sth->execute();
 				$insert_id = $sth->{'mysql_insertid'};
 			};
 		}
-		$self->rows_affected($sth->rows);
-		$self->sth_finish;
 		if ($@){
 			$self->db_error($statement,$@);
 			if ($self->unrepentant){
 				$self->kill_pipeline;
 			} else {
+			    $self->sth_finish;
 				return;
 			}
 		} else {
-			if ($insert_id){
+		    $self->rows_affected($sth->rows);
+		    $self->sth_finish;
+            if ($insert_id){
 				return $insert_id;
 			} else {
 				return $statement;

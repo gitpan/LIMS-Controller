@@ -12,7 +12,6 @@ WriteMakefile(
 							Net::Address::IPv4::Local => 0.12,
 							CGI::Upload => 1.10,
 							Config::IniFiles => 2.38,
-							Microarray => 0.3,
 							Date::EzDate => 1.08,
 							Test::More => 0.64,
 							Test::Group => 0.07,
